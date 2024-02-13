@@ -1,0 +1,36 @@
+version: '3'
+
+networks:
+    manager:
+
+services:
+    php:
+        build:
+            context: ./php
+            dockerfile: Dockerfile
+        container_name: php
+        ports:
+            - 80:80
+        volumes:
+            - ./src:/var/www
+        networks:
+            - manager
+    database:
+        image: mysql:latest
+        container_name: database
+        ports:
+            - 3306:3306
+        volumes:
+            - ./mysql:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: laravel
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+        networks:
+            - manager
+    composer:
+        image: composer:2.2.21
+        container_name: composer
+        volumes:
+            - ./src:/app
