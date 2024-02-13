@@ -18,5 +18,7 @@ class Role extends Model
         'owner'
     ];
 
-    protected $hidden = [];
+    protected $hidden = [
+        'pivot'
+    ];
 }

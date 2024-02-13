@@ -3,23 +3,27 @@
 namespace App\Models;
 
 use App\Models\Traits\Base;
-use App\Models\Traits\PermissionTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Permission extends Model
+class Log extends Model
 {
-    use Base, PermissionTrait, HasFactory, SoftDeletes;
+    use Base, HasFactory, SoftDeletes;
 
     protected $fillable = [
         'slug',
-        // @TODO naming scope.action | scope.section.action
-        'name',
-        'owner'
+        'ip',
+        'user_id',
+        'meta',
+        'action',
+        'path',
+        'roles',
+        'permissions',
+        'class',
     ];
 
-    protected $hidden = [
-        'pivot'
+    protected $casts = [
+        'meta' => 'array',
     ];
 }

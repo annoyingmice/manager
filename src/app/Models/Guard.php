@@ -30,5 +30,10 @@ class Guard extends Authenticatable
         'phone',
         'address',
         'otp_code',
+        'roles',
+    ];
+
+    protected $hidden = [
+        'privot'
     ];
 }

@@ -15,7 +15,7 @@ trait UserTrait
 
     public function activeOtp()
     {
-        return $this->otps()->whereNull('revoke_at')->orderBy('created_at', 'desc')->first();
+        return $this->otps()->whereNull('revoke_at')->orderBy('created_at', 'desc')->last();
     }
 
     public function roles()

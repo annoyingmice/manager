@@ -4,7 +4,6 @@ namespace App\Services\API;
 
 use App\Dto\API\PermissionCreateDto;
 use App\Models\Permission;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 trait PermissionTrait
 {

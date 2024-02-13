@@ -53,6 +53,7 @@ class User extends Authenticatable
         'password',
         'otp_secret',
         'remember_token',
+        'pivot'
     ];
 
     /**

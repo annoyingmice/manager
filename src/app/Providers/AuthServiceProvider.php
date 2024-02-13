@@ -7,10 +7,12 @@ namespace App\Providers;
 use App\Libs\JsonWebToken;
 use App\Models\Company;
 use App\Models\Guard;
+use App\Models\Log;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use App\Policies\CompanyPolicy;
+use App\Policies\LogPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\UserPolicy;
@@ -31,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         Permission::class => PermissionPolicy::class,
         User::class => UserPolicy::class,
+        Log::class => LogPolicy::class,
     ];
 
     /**
@@ -42,6 +45,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('permissions', PermissionPolicy::class);
         Gate::resource('roles', RolePolicy::class);
         Gate::resource('users', UserPolicy::class);
+        Gate::resource('logs', LogPolicy::class);
         Gate::define('assign-roles', [UserPolicy::class, 'assignRole']);
         Gate::define('assign-permissions', [RolePolicy::class, 'assignPermission']);
 

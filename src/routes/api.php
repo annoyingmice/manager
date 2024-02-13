@@ -6,6 +6,7 @@ use App\Enums\ResponseType;
 use App\Http\Controllers\API\RoleController;
 use App\Http\Controllers\API\PermissionController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\LogController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UserRoleController;
 use App\Http\Controllers\API\RolePermissionController;
@@ -38,6 +39,7 @@ Route::middleware(['auth:api', 'secure-otp'])
         Route::resource('roles', RoleController::class);
         Route::resource('permissions', PermissionController::class);
         Route::resource('users', UserController::class);
+        Route::resource('logs', LogController::class);
         Route::resource('user-roles', UserRoleController::class);
         Route::resource('role-permissions', RolePermissionController::class);
 });
@@ -50,7 +52,7 @@ Route::get(
         [
             'message' => ResponseMessage::FOUND,
             'type' => ResponseType::GET,
-            'data' => auth()->user(),
+            'data' => request()->user(),
         ],
         Response::HTTP_OK
     )

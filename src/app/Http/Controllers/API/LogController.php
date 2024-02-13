@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Dto\API\PermissionCreateDto;
+use App\Dto\API\LogCreateDto;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\PermissionCreateRequest;
+use App\Http\Requests\API\LogCreateRequest;
 use App\Http\Resources\API\GenericResource;
-use App\Models\Permission;
+use App\Models\Log;
 use App\Services\Base;
+use Illuminate\Http\Request;
 
-class PermissionController extends Controller
+class LogController extends Controller
 {
     private $service;
 
     public function __construct(Base $service)
     {
         $this->service = $service;
-        $this->authorizeResource(Permission::class, 'permission');
+        $this->authorizeResource(Log::class, 'log');
     }
 
     /**
@@ -25,7 +26,7 @@ class PermissionController extends Controller
     public function index()
     {
         return new GenericResource(
-            $this->service->permissions(
+            $this->service->logs(
                 request()->get('limit'),
             ),
         );
@@ -42,11 +43,11 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PermissionCreateRequest $request)
+    public function store(LogCreateRequest $request)
     {
         return new GenericResource(
-            $this->service->permissionCreate(
-                PermissionCreateDto::fromRequest($request),
+            $this->service->logCreate(
+                LogCreateDto::fromRequest($request),
             ),
         );
     }
@@ -54,11 +55,11 @@ class PermissionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Permission $permission)
+    public function show(Log $log)
     {
         return new GenericResource(
-            $this->service->permissionShow(
-                $permission
+            $this->service->logShow(
+                $log
             ),
         );
     }
@@ -66,7 +67,7 @@ class PermissionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Permission $permission)
+    public function edit(Log $log)
     {
         //
     }
@@ -74,12 +75,12 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PermissionCreateRequest $request, Permission $permission)
+    public function update(Request $request, Log $log)
     {
         return new GenericResource(
-            $this->service->permissionUpdate(
-                PermissionCreateDto::fromRequest($request),
-                $permission
+            $this->service->logUpdate(
+                LogCreateDto::fromRequest($request),
+                $log
             ),
         );
     }
@@ -87,11 +88,11 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Permission $permission)
+    public function destroy(Log $log)
     {
         return new GenericResource(
-            $this->service->permissionDelete(
-                $permission
+            $this->service->logDelete(
+                $log
             ),
         );
     }

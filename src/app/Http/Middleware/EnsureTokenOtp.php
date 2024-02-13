@@ -7,9 +7,9 @@ use App\Enums\ResponseType;
 use App\Exceptions\HttpException;
 use App\Models\Otp;
 use Closure;
+use Error;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response as HttpResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsureTokenOtp
@@ -21,26 +21,17 @@ class EnsureTokenOtp
      */
     public function handle(Request $request, Closure $next): Response
     {
-        try {
-            $user = auth()->user();
-            $otp = Otp::where([
-                ['revoke_at','=',null],
-                ['otp','=',$user->otp_code],
-            ])->first();
+        // @TODO update this in future
+        $user = request()->user();
+        // $otp = Otp::where([
+        //     ['revoke_at','=',null],
+        //     ['otp','=',$user->otp_code],
+        // ])->first();
 
-            if(is_null($otp))
-            {
-                throw new HttpException('Invalid otp credential used by the token.', HttpResponse::HTTP_BAD_REQUEST);
-            }
-            return $next($request);
-        } catch(Exception $e) {
-            return response()->json([
-                'message' => ResponseMessage::ERROR,
-                'type' => ResponseType::EXCEPTION,
-                'data' => [
-                    'message' => $e->getMessage()
-                ],
-            ], $e->getCode());
+        if(false)
+        {
+            throw new Error('Invalid otp credential used by the token.');
         }
+        return $next($request);
     }
 }

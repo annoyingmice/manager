@@ -68,7 +68,7 @@ trait AuthTrait
             throw new Error('Invalid otp test.');
         }
 
-        $arr = $otp->user->toArray();
+        $arr = $otp->user->load('roles.permissions')->toArray();
 
         // Update activeOtp
         $otp->used_at = now();
