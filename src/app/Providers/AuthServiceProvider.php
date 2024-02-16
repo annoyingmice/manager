@@ -6,20 +6,33 @@ namespace App\Providers;
 
 use App\Libs\JsonWebToken;
 use App\Models\Company;
+use App\Models\CompanyUser;
 use App\Models\Guard;
 use App\Models\Log;
+use App\Models\PaymentMethod;
 use App\Models\Permission;
+use App\Models\Plan;
+use App\Models\RequestType;
 use App\Models\Role;
+use App\Models\Status;
+use App\Models\Subscription;
 use App\Models\User;
+use App\Models\UserRequest;
 use App\Policies\CompanyPolicy;
+use App\Policies\CompanyUserPolicy;
 use App\Policies\LogPolicy;
+use App\Policies\PaymentMethodPolicy;
 use App\Policies\PermissionPolicy;
+use App\Policies\PlanPolicy;
+use App\Policies\UserRequestPolicy;
+use App\Policies\RequestTypePolicy;
 use App\Policies\RolePolicy;
+use App\Policies\StatusPolicy;
+use App\Policies\SubscriptionPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -34,6 +47,13 @@ class AuthServiceProvider extends ServiceProvider
         Permission::class => PermissionPolicy::class,
         User::class => UserPolicy::class,
         Log::class => LogPolicy::class,
+        Plan::class => PlanPolicy::class,
+        PaymentMethod::class => PaymentMethodPolicy::class,
+        Status::class => StatusPolicy::class,
+        Subscription::class => SubscriptionPolicy::class,
+        CompanyUser::class => CompanyUserPolicy::class,
+        RequestType::class => RequestTypePolicy::class,
+        UserRequest::class => UserRequestPolicy::class,
     ];
 
     /**
@@ -41,14 +61,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::resource('companies', CompanyPolicy::class);
-        Gate::resource('permissions', PermissionPolicy::class);
-        Gate::resource('roles', RolePolicy::class);
-        Gate::resource('users', UserPolicy::class);
-        Gate::resource('logs', LogPolicy::class);
-        Gate::define('assign-roles', [UserPolicy::class, 'assignRole']);
-        Gate::define('assign-permissions', [RolePolicy::class, 'assignPermission']);
-
         Auth::viaRequest(
             'jwt',
             fn (Request $request) => new Guard(

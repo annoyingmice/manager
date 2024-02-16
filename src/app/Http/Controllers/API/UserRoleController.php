@@ -40,7 +40,7 @@ class UserRoleController extends Controller
      */
     public function store(UserRoleCreateRequest $request)
     {
-        $this->authorize('assign-roles');
+        $this->authorize('assignRole', User::class);
         return new GenericResource(
             $this->service->assignRole(
                 UserRoleCreateDto::fromRequest($request),

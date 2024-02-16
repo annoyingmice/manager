@@ -2,6 +2,7 @@
 
 use App\Enums\ResponseMessage;
 use App\Enums\ResponseType;
+use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -35,6 +35,9 @@ class Company extends Model
         // @TODO
         // @FRONTEND
         // country, region, state/province, city/municipality, Str. Name, House No./ Building No.
-        'address'
+        'address',
+        'otp_secret',
     ];
+    // Auto load related models
+    protected $with = [];
 }

@@ -13,7 +13,7 @@ class CompanyPolicy
      */
     public function viewAny(Guard $user): bool
     {
-        return $user->hasPermission(['all', 'role.list']);
+        return $user->hasPermission(['all', 'company.list']);
     }
 
     /**
@@ -21,7 +21,7 @@ class CompanyPolicy
      */
     public function view(Guard $user, Company $company): bool
     {
-        return $user->hasPermission(['all', 'role.show']);
+        return $user->hasPermission(['all', 'company.show']);
     }
 
     /**
@@ -29,7 +29,7 @@ class CompanyPolicy
      */
     public function create(Guard $user): bool
     {
-        return $user->hasPermission(['all', 'role.store']);
+        return $user->hasPermission(['all', 'company.store']);
     }
 
     /**
@@ -37,7 +37,7 @@ class CompanyPolicy
      */
     public function update(Guard $user, Company $company): bool
     {
-        return $user->hasPermission(['all', 'role.update']);
+        return $user->hasPermission(['all', 'company.update']);
     }
 
     /**
@@ -45,7 +45,7 @@ class CompanyPolicy
      */
     public function delete(Guard $user, Company $company): bool
     {
-        return $user->hasPermission(['all', 'role.delete']);
+        return $user->hasPermission(['all', 'company.delete']);
     }
 
     /**
@@ -53,7 +53,7 @@ class CompanyPolicy
      */
     public function restore(Guard $user, Company $company): bool
     {
-        return $user->hasPermission(['all', 'role.store']);
+        return $user->hasPermission(['all', 'company.store']);
     }
 
     /**
@@ -61,6 +61,6 @@ class CompanyPolicy
      */
     public function forceDelete(Guard $user, Company $company): bool
     {
-        return $user->hasPermission(['all', 'role.forceDelete']);
+        return $user->hasPermission(['all', 'company.forceDelete']);
     }
 }

@@ -21,4 +21,6 @@ class Otp extends Model
         'revoke_at',
     ];
     protected $hidden = [];
+    // Auto load related models
+    protected $with = ['user'];
 }

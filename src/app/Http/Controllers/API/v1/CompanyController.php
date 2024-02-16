@@ -16,6 +16,7 @@ class CompanyController extends Controller
     public function __construct(Base $service) 
     {
         $this->service = $service;
+        $this->authorizeResource(Company::class);
     }
 
     /**
@@ -92,6 +93,13 @@ class CompanyController extends Controller
             $this->service->v1CompanyDelete(
                 $company
             ),
+        );
+    }
+
+    public function qr(Company $company)
+    {
+        return $this->service->v1CompanyQR(
+            $company
         );
     }
 }

@@ -16,7 +16,7 @@ class RoleController extends Controller
     public function __construct(Base $service)
     {
         $this->service = $service;
-        $this->authorizeResource(Role::class, 'role');
+        $this->authorizeResource(Role::class);
     }
 
     /**

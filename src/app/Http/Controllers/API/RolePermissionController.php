@@ -40,7 +40,7 @@ class RolePermissionController extends Controller
      */
     public function store(RolePermissionCreateRequest $request)
     {
-        $this->authorize('assign-permissions');
+        $this->authorize('assignPermission', Role::class);
         return new GenericResource(
             $this->service->assignPermission(
                 RolePermissionCreateDto::fromRequest($request),

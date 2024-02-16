@@ -27,7 +27,7 @@ return new class extends Migration
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
-            // $table->primary(['role_id', 'user_id']);
+            $table->primary(['role_id', 'user_id']);
         });
     }
 

@@ -24,6 +24,12 @@ return new class extends Migration
             $table->string('class');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
         });
     }
 
@@ -32,6 +38,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('logs', function (Blueprint $table) {
+            $table->dropForeign('logs_user_id_foreign');
+        });
         Schema::dropIfExists('logs');
     }
 };

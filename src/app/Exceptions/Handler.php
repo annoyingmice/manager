@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Enums\ResponseMessage;
 use App\Enums\ResponseType;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
@@ -38,7 +39,10 @@ class Handler extends ExceptionHandler
     {
         switch($e)
         {
-            case $e instanceof AccessDeniedHttpException:
+            case (
+                $e instanceof AuthorizationException)
+                || ($e instanceof AccessDeniedHttpException
+            ):
                 return response()->json(
                     $this->serializeResponse($e),
                     Response::HTTP_FORBIDDEN

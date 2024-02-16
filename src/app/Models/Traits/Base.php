@@ -3,7 +3,10 @@
 namespace App\Models\Traits;
 
 use App\Libs\Otp;
+use App\Models\Company;
 use App\Models\Log;
+use App\Models\Plan;
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Ramsey\Uuid\Uuid;
@@ -18,18 +21,33 @@ trait Base {
         parent::boot();
         static::creating(function($m) {
             $m->slug = Uuid::uuid4();
-            if($m instanceof User) {
-                $m->otp_secret = (new otp)->createSecretKey();
+            if(
+                ($m instanceof User)
+                || ($m instanceof Company)
+            ) {
+                $m->otp_secret = (new Otp)->createSecretKey();
+            }
+            if($m instanceof Subscription) {
+                $m->expires_at = (new static)->planExpiry();
             }
         });
-        static::retrieved(fn ($m) => (new self)->log($m));
-        // static::created();
-        // static::updated();
-        // static::saved();
-        // static::deleted();
-        // static::trashed();
-        // static::forceDeleted();
-        // static::restored();
+        static::updating(function($m) {
+            if($m instanceof Subscription && $m->status_id == 5) { // Only run on changing status from pending to active
+                $m->expires_at = (new static)->planExpiry();
+            }
+        });
+        static::retrieved(function($m) {
+            static $hasLogged = false;
+            if(!$hasLogged) {
+                (new static)->log($m);
+                $hasLogged = true;
+            }
+        });
+        static::created(fn ($m) => (new self)->log($m));
+        static::updated(fn ($m) => (new self)->log($m));
+        static::deleted(fn ($m) => (new self)->log($m));
+        static::forceDeleted(fn ($m) => (new self)->log($m));
+        static::restored(fn ($m) => (new self)->log($m));
     }
 
     /**
@@ -78,6 +96,15 @@ trait Base {
         {
             Log::create($log);
         }
+    }
+
+    private function planExpiry()
+    {
+        return now()->addDays(
+            Plan::find(
+                request()->get('plan_id')
+            )->days
+        );
     }
 
 }

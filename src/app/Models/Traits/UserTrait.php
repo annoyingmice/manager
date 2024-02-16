@@ -2,6 +2,8 @@
 
 namespace App\Models\Traits;
 
+use App\Models\Company;
+use App\Models\CompanyUser;
 use App\Models\Guard;
 use App\Models\Otp;
 use App\Models\Role;
@@ -25,6 +27,23 @@ trait UserTrait
         }
 
         return $this->belongsToMany(Role::class);
+    }
+
+    public function companyUser()
+    {
+        return $this->hasOne(CompanyUser::class);
+    }
+
+    public function company()
+    {
+        return $this->hasOneThrough(
+            Company::class,
+            CompanyUser::class,
+            'user_id',
+            'id',
+            'id',
+            'company_id'
+        );
     }
 
     public function hasRole(array $roles): bool

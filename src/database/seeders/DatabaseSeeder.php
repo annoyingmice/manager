@@ -2,13 +2,9 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use App\Models\Otp;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Permission;
-use App\Models\Company;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,5 +19,11 @@ class DatabaseSeeder extends Seeder
                 Permission::factory()
             )
         )->create();
+        $this->call([
+            PaymentMethodSeeder::class,
+            PlanSeeder::class,
+            StatusSeeder::class,
+            RequestTypeSeeder::class,
+        ]);
     }
 }

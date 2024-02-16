@@ -3,14 +3,16 @@
 namespace App\Services\API\v1;
 
 use App\Dto\API\v1\CompanyCreateDto;
+use App\Libs\Otp;
 use App\Models\Company;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use chillerlan\QRCode\QRCode;
 
 trait CompanyTrait
 {
-
+    private $otp;
     public function __v1InitializeCompany()
     {
+        $this->otp = new Otp();
     }
 
     /**
@@ -55,9 +57,6 @@ trait CompanyTrait
      */
     public function v1CompanyShow(Company $company): Company
     {
-        if(!$company) {
-            throw new ModelNotFoundException('Company not found.');
-        }
         return $company;
     }
 
@@ -94,5 +93,11 @@ trait CompanyTrait
     {
         $company->delete();
         return $company;
+    }
+
+    public function v1CompanyQR(Company $company): string
+    {
+        $url = url('/verify-employee?company='.$company->slug.'&token='.$this->otp->getCurrentOtp($company->otp_secret));
+        return '<img src="'.(new QRCode)->render($url).'" alt="QR Code" />';
     }
 }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('tel')->unique();
             $table->string('phone')->unique();
             $table->string('address');
+            $table->string('otp_secret')->unique();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -18,8 +18,9 @@ class Permission extends Model
         'name',
         'owner'
     ];
-
     protected $hidden = [
         'pivot'
     ];
+    // Auto load related models
+    protected $with = ['role'];
 }

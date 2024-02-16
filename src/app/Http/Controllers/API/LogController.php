@@ -17,7 +17,7 @@ class LogController extends Controller
     public function __construct(Base $service)
     {
         $this->service = $service;
-        $this->authorizeResource(Log::class, 'log');
+        $this->authorizeResource(Log::class);
     }
 
     /**
