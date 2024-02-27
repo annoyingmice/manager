@@ -15,7 +15,7 @@ use App\Services\API\RolePermissionTrait;
 use App\Services\API\StatusTrait;
 use App\Services\API\SubscriptionTrait;
 
-class Base extends v1 
+class Base
 {
     use AuthTrait,
         RoleTrait,
@@ -32,7 +32,6 @@ class Base extends v1
 
     public function __construct()
     {
-        parent::__construct();
         $this->__initializeAuth();
         $this->__initializeRole();
         $this->__initializePermission();
