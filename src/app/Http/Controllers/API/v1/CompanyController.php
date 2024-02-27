@@ -7,13 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\CompanyCreateRequest;
 use App\Http\Resources\API\GenericResource;
 use App\Models\Company;
-use App\Services\Base;
+use App\Services\v1;
 
 class CompanyController extends Controller
 {
     private $service;
 
-    public function __construct(Base $service) 
+    public function __construct(v1 $service) 
     {
         $this->service = $service;
     }

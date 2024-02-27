@@ -10,7 +10,7 @@ use App\Services\API\UserTrait;
 use App\Services\API\UserRoleTrait;
 use App\Services\API\RolePermissionTrait;
 
-class Base extends v1 
+class Base
 {
     use AuthTrait,
         RoleTrait,
@@ -22,7 +22,6 @@ class Base extends v1
 
     public function __construct()
     {
-        parent::__construct();
         $this->__initializeAuth();
         $this->__initializeRole();
         $this->__initializePermission();
